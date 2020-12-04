@@ -1,9 +1,35 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Login from '@/views/login/Login'
+import Layout from '../views/home/index'
+import Home from '@/views/home/Home'
+import Settings from '@/views/home/Settings'
 
 Vue.use(VueRouter)
 
-const routes = []
+const routes = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/',
+    component: Layout,
+    children: [
+      {
+        path: '/',
+        name: 'Home',
+        component: Home
+      },
+      {
+        path: '/settings',
+        name: Settings,
+        component: Settings
+      }
+    ]
+  }
+]
 
 const router = new VueRouter({
   mode: 'history',
