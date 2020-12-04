@@ -2,6 +2,21 @@
 
 import request from '@/utils/request'
 
+// 拦截器
+request.interceptors.request.use(
+  function (config) {
+    const user = JSON.parse(window.localStorage.getItem('user'))
+    // console.log(config)
+    if (user) {
+      config.headers.Authorization = `Bearer ${user.token}`
+    }
+    return config
+  },
+  function (error) {
+    return Promise.reject(error)
+  }
+)
+
 // 用户登录
 export const login = (data) => {
   return request({
@@ -13,11 +28,12 @@ export const login = (data) => {
 
 // 获取用户信息
 export const getUserProfile = () => {
+  // const user = JSON.parse(window.localStorage.getItem('user'))
   return request({
     method: 'GET',
-    url: '/mp/v1_0/user/profile',
-    headers: {
-      Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTg5MDkxMjYsInVzZXJfaWQiOjEsInJlZnJlc2giOmZhbHNlLCJ2ZXJpZmllZCI6dHJ1ZX0.EdKErKDqMc3snkYxqt02jSa8t9G44002yWKY3CMOMJg'
-    }
+    url: '/mp/v1_0/user/profile'
+    // headers: {
+    //   Authorization: `Bearer ${user.token}`
+    // }
   })
 }

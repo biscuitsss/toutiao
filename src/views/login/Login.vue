@@ -81,12 +81,13 @@ export default {
     login () {
       this.loginLoading = true
       login(this.user).then(res => {
-        console.log(res)
+        // console.log(res)
         this.loginLoading = false
         this.$message({
           message: '登录成功',
           type: 'success'
         })
+        window.localStorage.setItem('user', JSON.stringify(res.data.data))
         this.$router.push('/')
       }).catch(err => {
         console.log('登录失败', err)
